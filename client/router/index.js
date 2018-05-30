@@ -31,14 +31,14 @@ const router = new Router({
       name: 'profile',
       component: Profile,
       meta: {
-        authRequred: true
+        authRequired: true
       }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.authRequred)) {
+  if (to.matched.some(record => record.meta.authRequired)) {
     if (!store.state.user) {
       next({
         path: '/signin',
