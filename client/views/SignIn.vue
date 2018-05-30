@@ -6,8 +6,10 @@
   </form>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
   computed: {
+    ...mapGetters(['user']),
     nextRoute () {
       return this.$route.query.redirect || '/'
     }
@@ -18,15 +20,16 @@ export default {
       password: ''
     }
   },
-  mounted () {
+  watch: {
+    user (auth) {
+      if(!!auth){
+        this.$router.replace(this.nextRoute)
+      }
+    }
   },
   methods: {
     async onSubmit () {
       const auth = await this.$auth.login(this.login, this.password)
-      if(!!auth){
-        console.log(this.$router)
-        this.$router.replace(this.nextRoute)
-      }
     }
   }
 }
